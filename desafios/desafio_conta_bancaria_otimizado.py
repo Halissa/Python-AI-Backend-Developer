@@ -21,6 +21,7 @@ def criar_usuario(usuarios):
             estado = input('Digite a sigla do estado: ')
 
             usuarios.append({'cpf': cpf, 'data_nascimento': data_nascimento, 'endereco': f'{logradouro}, {bairro}, {cidade}/{estado}', 'contas':[]})
+            print('Usuario cadastrado com sucesso!\n')
         else:
             print('CPF já cadastrado')
     except:
@@ -41,9 +42,10 @@ def criar_conta(usuarios):
         conta = ultima_conta_criada + 1
 
         usuario['contas'].append({'agencia':'0001', 'conta': conta, 'movimentacoes':{}})
+        print('Conta cadastrada com sucesso!\n')
 
     except:
-        print('CPF inválido / Usuario não cadastrado')
+        print('CPF inválido / Usuario não cadastrado\n')
 
 
 def sacar(usuarios):
