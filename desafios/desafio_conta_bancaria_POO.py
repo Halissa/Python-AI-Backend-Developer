@@ -314,8 +314,3 @@ def menu():
 
 # Executando a função menu:
 menu()
-
-
-
-
-
