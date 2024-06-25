@@ -15,8 +15,7 @@ except IOError as exc:
     print(f'Erro ao criar o arquivo {exc}')
 
 
-
-# Lende os arquivos .csv
+# Lende os arquivos .csv:
 try:
     with open(ROOT_PATH / 'usuarios.csv', 'r', newline='', encoding='utf-8') as arquivo:
         leitor = csv.reader(arquivo)

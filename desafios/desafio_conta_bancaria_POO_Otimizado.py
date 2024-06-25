@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from pathlib import Path
 import datetime as dt
 
 
@@ -87,7 +86,6 @@ class Deposito:
     def __init__(self, valor):
         self._valor = valor
 
-
     def registrar(self, conta):
         status_transacao = conta.depositar(self._valor)
 
@@ -96,16 +94,15 @@ class Deposito:
             return True
         else:
             return False
-            
-        
+
+
 class Saque:
     def __init__(self, valor):
         self._valor = valor
 
-
     def registrar(self, conta):
         status_transacao = conta.sacar(self._valor)
-        
+
         if status_transacao:
             conta.historico.adicionar_transacao(self)
             return True
@@ -186,8 +183,8 @@ def log_transacao(func):
 
     return envelope
 
-    
-# Parte do menu    
+
+# Parte do menu:
 def menu():
     clientes = {}
     contas = {}
@@ -271,11 +268,13 @@ def menu():
 
     @log_transacao
     def sacar(clientes):
-        '''Sacar, recebe a lista de clientes, solicita cpf e número de conta para o usuario, se a conta for encontrada dentro do usuario pede o valor e conclui a transação'''
-        
+        '''Sacar, recebe a lista de clientes, solicita cpf e número de conta
+        para o usuario, se a conta for encontrada dentro do usuario pede o 
+        valor e conclui a transação'''
+
         try:
             cpf = int(input('Digite o CPF: '))
-            
+
             if cpf in clientes.keys():
                 try:
                     print('Agencia 0001')
@@ -290,16 +289,18 @@ def menu():
                             print('\nSaque realizado com sucesso!\n')
                             print(f'Novo Saldo R${conta_do_usuario.saldo:.2f}')
                         else:
-                            print('Não foi possível concluir a transação, por gentileza validar o extrato')
-                            print('É permitido realizar apenas 10 transações por dia, 3 saques diários no valor de R$500.00')
-
-                    except:
+                            print('Não foi possível concluir a transação, por',
+                                  'gentileza validar o extrato')
+                            print('É permitido realizar apenas 10 transações',
+                                  'por dia, 3 saques diários no valor de ',
+                                  'R$500.00')
+                    except Exception:
                         print('\nValor inválido, transação não concluída\n')
-                except:
+                except Exception:
                     print('Número de conta inválido')
-        except:
+        except Exception:
             print('CPF inválido/ Cliente não cadastrado')
-    
+
     @log_transacao
     def visualizar_extrato(clientes):
         '''Deve listar todos os depósitos e saques realizados na conta e 
@@ -309,26 +310,28 @@ def menu():
 
         try:
             cpf = int(input('Digite o CPF: '))
-            
+
             if cpf in clientes.keys():
                 try:
                     print('Agencia 0001')
                     conta_procurada = int(input('Digite o número da conta: '))
                     contas_do_cpf = clientes[cpf].contas
-                    conta_do_usuario = next(conta for conta in contas_do_cpf if conta.numero == conta_procurada)
+                    conta_do_usuario = next(conta for conta in contas_do_cpf
+                                            if conta.numero == conta_procurada)
 
+                    transacoes = conta_do_usuario.historico.transacoes
                     if conta_do_usuario.saldo > 0:
-                        for data, transacao in conta_do_usuario.historico.transacoes.items():
-                            print(f'{data.strftime("%d/%m/%Y %H:%M:%S")} - {transacao.__class__.__name__} - R${transacao._valor:.2f}')
+                        for data, transacao in transacoes.items():
+                            print(f'{data.strftime("%d/%m/%Y %H:%M:%S")} -',
+                                  f'{transacao.__class__.__name__} - ',
+                                  f'R${transacao._valor:.2f}')
                         print(f'Saldo: R${conta_do_usuario.saldo:.2f}\n')
                     else:
                         print('Nenhuma transação realizada até o momento.\n')
-
-                except:
+                except Exception:
                     print('Número de conta inválido')
-        except:
+        except Exception:
             print('CPF inválido/ Cliente não cadastrado')
-
 
     while True:
         opcao = input('''Digite a opção desejada:
@@ -338,7 +341,7 @@ def menu():
         4 - Novo cliente
         5 - Nova conta
         0 - Sair\n''')
-        
+
         if opcao == '1':
             sacar(clientes)
         elif opcao == '2':
@@ -354,7 +357,7 @@ def menu():
             break
         else:
             print('\nOpção inválida, tente novamente\n')
-    
+
 
 # Executando a função menu:
 
