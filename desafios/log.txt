@@ -1,0 +1,4 @@
+[2024-06-25 13:57:27] Função 'criar_cliente' executada com argumentos ({123456: <Cliente: ('123456')>},) e {}. Retornou None
+[2024-06-25 13:59:39] Função 'criar_conta' executada com argumentos ({123456: <Cliente: ('123456')>}, {1: <__main__.Conta object at 0x000002E1684BE6D0>}) e {}. Retornou None
+[2024-06-25 13:59:58] Função 'depositar' executada com argumentos ({123456: <Cliente: ('123456')>},) e {}. Retornou None
+[2024-06-25 14:00:26] Função 'sacar' executada com argumentos ({123456: <Cliente: ('123456')>},) e {}. Retornou None
