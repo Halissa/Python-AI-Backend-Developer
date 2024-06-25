@@ -220,7 +220,7 @@ def menu():
                 print("Cliente cadastrado com sucesso!\n")
             else:
                 print("CPF já cadastrado")
-        except:
+        except Exception:
             print("CPF inválido")
 
     @log_transacao
@@ -242,7 +242,7 @@ def menu():
                 print("Conta cadastrada com sucesso!\n")
             else:
                 print("CPF inválido / Cliente não cadastrado\n")
-        except:
+        except Exception:
             print("CPF inválido / Cliente não cadastrado\n")
 
     @log_transacao
