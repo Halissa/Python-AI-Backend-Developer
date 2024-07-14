@@ -1,9 +1,9 @@
+from typing import List
 from uuid import UUID
 import pytest
-from typing import List
-from store.schemas.product import ProductOut
-from store.usecases.product import product_usecase
 from store.core.exceptions import NotFoundException
+from store.schemas.product import ProductOut, ProductUpdateOut
+from store.usecases.product import product_usecase
 
 
 async def test_usecases_create_should_return_success(product_in):
@@ -34,3 +34,10 @@ async def test_usecases_get_should_return_sucess():
     result = await product_usecase.query()
 
     assert isinstance(result, List)
+
+
+async def test_usecases_update_should_return_success(product_up, product_inserted):
+    product_up.price = 7500.00
+    result = await product_usecase.update(id=product_inserted.id, body=product_up)
+
+    assert isinstance(result, ProductUpdateOut)
