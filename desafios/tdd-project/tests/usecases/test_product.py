@@ -34,6 +34,7 @@ async def test_usecases_get_should_not_found():
 async def test_usecases_query_should_return_sucess():
     result = await product_usecase.query()
     assert isinstance(result, List)
+    assert len(result) > 1
 
 
 async def test_usecases_update_should_return_success(product_up, product_inserted):
