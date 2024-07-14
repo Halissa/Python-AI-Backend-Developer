@@ -1,3 +1,4 @@
+from typing import List
 from uuid import UUID
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from store.db.mongo import db_client
@@ -24,6 +25,9 @@ class ProductUsecase:
             raise NotFoundException(message=f"Product not found with filter: {id}")
 
         return ProductOut(**result)
+
+    async def query(self) -> List[ProductOut]:
+        return [ProductOut(**item) async for item in self.collection.find()]
 
 
 product_usecase = ProductUsecase()
