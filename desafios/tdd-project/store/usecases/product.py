@@ -39,5 +39,10 @@ class ProductUsecase:
 
         return ProductUpdateOut(**result)
 
+    async def delete(self, id: UUID) -> bool:
+        result = await self.collection.delete_one({"id": id})
+
+        return True if result.deleted_count > 0 else False
+
 
 product_usecase = ProductUsecase()

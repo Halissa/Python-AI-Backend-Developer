@@ -41,3 +41,9 @@ async def test_usecases_update_should_return_success(product_up, product_inserte
     result = await product_usecase.update(id=product_inserted.id, body=product_up)
 
     assert isinstance(result, ProductUpdateOut)
+
+
+async def test_usecases_delete_should_return_success(product_inserted):
+    result = await product_usecase.delete(id=product_inserted.id)
+
+    assert result is True
