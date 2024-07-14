@@ -1,3 +1,4 @@
+from uuid import UUID
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 from store.db.mongo import db_client
 from store.schemas.product import ProductIn, ProductOut
@@ -14,6 +15,14 @@ class ProductUsecase:
         await self.collection.insert_one(product.model_dump())
 
         return product
+
+    async def get(self, id: UUID) -> ProductOut:
+        result = await self.collection.find_one({"id": id})
+
+        if not result:
+            raise Exception()
+
+        return ProductOut(**result)
 
 
 product_usecase = ProductUsecase()
