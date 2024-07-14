@@ -21,11 +21,11 @@ class ProductOut(ProductIn):
     updated_at: datetime = Field()
 
 
-class ProductUpdate(ProductBase):
+class ProductUpdate(BaseSchemaMixin):
     quantity: Optional[int] = Field(None, description="Product quantity")
     price: Optional[float] = Field(None, description="Product price")
     status: Optional[bool] = Field(None, description="Product status")
 
 
-class ProductUpdateOut(ProductUpdate):
+class ProductUpdateOut(ProductOut):
     pass
