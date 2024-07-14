@@ -1,9 +1,10 @@
 from typing import List
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, status
 from pydantic import UUID4
-from store.schemas.product import ProductIn, ProductOut, ProductUpdate
-from store.usecases.product import ProductUsecase
 from store.core.exceptions import NotFoundException
+
+from store.schemas.product import ProductIn, ProductOut, ProductUpdate, ProductUpdateOut
+from store.usecases.product import ProductUsecase
 
 router = APIRouter(tags=["products"])
 
@@ -35,5 +36,15 @@ async def patch(
     id: UUID4 = Path(alias="id"),
     body: ProductUpdate = Body(...),
     usecase: ProductUsecase = Depends(),
-) -> ProductOut:
+) -> ProductUpdateOut:
     return await usecase.update(id=id, body=body)
+
+
+@router.delete(path="/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete(
+    id: UUID4 = Path(alias="id"), usecase: ProductUsecase = Depends()
+) -> None:
+    try:
+        await usecase.delete(id=id)
+    except NotFoundException as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=exc.message)
