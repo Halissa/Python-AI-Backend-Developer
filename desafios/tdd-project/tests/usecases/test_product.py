@@ -47,3 +47,13 @@ async def test_usecases_delete_should_return_success(product_inserted):
     result = await product_usecase.delete(id=product_inserted.id)
 
     assert result is True
+
+
+async def test_usecases_delete_should_not_found():
+    with pytest.raises(NotFoundException) as err:
+        await product_usecase.delete(id=UUID("d4a7e0c1-5b8f-4f6e-9c8b-2c3d1a9b0f7d"))
+
+    assert (
+        err.value.message
+        == "Product not found with filter: d4a7e0c1-5b8f-4f6e-9c8b-2c3d1a9b0f7d"
+    )
