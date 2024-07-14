@@ -1,5 +1,8 @@
+from uuid import UUID
+import pytest
 from store.schemas.product import ProductOut
 from store.usecases.product import product_usecase
+from store.core.exceptions import BaseException, NotFoundException
 
 
 async def test_usecases_create_should_return_success(product_in):
@@ -16,15 +19,11 @@ async def test_usecases_get_should_return_success(product_inserted):
     assert result.name == "Iphone 14 Pro Max"
 
 
-"""
-
-
 async def test_usecases_get_should_not_found():
-    with pytest.raises(Exception) as err:
+    with pytest.raises(NotFoundException) as err:
         await product_usecase.get(id=UUID("d4a7e0c1-5b8f-4f6e-9c8b-2c3d1a9b0f7d"))
-    breakpoint()
+
     assert (
-        err.value.args[0]
-        == "Product not found with filter: UUID('d4a7e0c1-5b8f-4f6e-9c8b-2c3d1a9b0f7d')"
+        err.value.message
+        == "Product not found with filter: d4a7e0c1-5b8f-4f6e-9c8b-2c3d1a9b0f7d"
     )
-"""
