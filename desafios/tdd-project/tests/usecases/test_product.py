@@ -30,9 +30,9 @@ async def test_usecases_get_should_not_found():
     )
 
 
-async def test_usecases_get_should_return_sucess():
+@pytest.mark.usefixtures("products_inserted")
+async def test_usecases_query_should_return_sucess():
     result = await product_usecase.query()
-
     assert isinstance(result, List)
 
 
